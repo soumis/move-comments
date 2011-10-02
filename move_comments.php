@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Move Comments
-Version: 1.0.0
+Version: 2.0.0
 Plugin URI: http://www.dountsis.com/projects/move-comments/
 Author: Apostolos Dountsis
 Author URI: http://www.dountsis.com
