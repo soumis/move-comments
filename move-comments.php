@@ -28,7 +28,7 @@ Description: Allows you to move comments between posts. Adds a page under <a hre
 include_once('moco-db.php');
 include_once('moco-common.php');
 
-class _comments
+class Move_comments
 {
 	var $db;
 	var $form_errors;
@@ -306,5 +306,5 @@ class _comments
 	}
 }
 
-$mc = new _comments();
+$mc = new Move_comments();
 ?>
