@@ -33,9 +33,9 @@ class move_comments
 	var $db;
 	var $form_errors;
 	
-	function move_comments()
+	function __construct()
 	{
-		$this->db =& new moco_db();
+		$this->db = new moco_db();
 		
 		$this->attach_view();
 		
@@ -306,5 +306,5 @@ class move_comments
 	}
 }
 
-$mc =& new move_comments();
+$mc = new move_comments();
 ?>
