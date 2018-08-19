@@ -98,7 +98,7 @@ class Move_comments
 		if (isset($submenu['edit-comments.php']))
 		{
 			// parent, page_title, menu_title, access_level/capability, file, [function]);
-			add_submenu_page('edit-comments.php', 'moderate_comments', 'Move', 8, __FILE__, array(&$this, 'admin_page'));
+			add_submenu_page('edit-comments.php', 'Move Comments', 'Move', 8, __FILE__, array(&$this, 'admin_page'));
 		}
 		else
 		{
