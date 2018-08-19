@@ -8,7 +8,7 @@ Author URI: http://www.dountsis.com
 Description: Allows you to move comments between posts. Adds a page under <a href="edit-comments.php?page=move_comments/move_comments.php">Comments -> Move</a>.
 */
 
-/*  Copyright 2007  APOSTOLOS DOUNTSIS
+/*  Copyright 2018  APOSTOLOS DOUNTSIS
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
