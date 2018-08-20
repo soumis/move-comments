@@ -212,7 +212,7 @@ class Move_comments
 		
 		if(!empty($comments))
 		{
-			// List the files in the database
+			// List the available pages and posts in the database
 			$html .= '<table id="the-list-x" width="100%" cellpadding="3" cellspacing="3">'."\n";
 			$html .= '<tr>'."\n";
 //			$html .= '<th scope="col">ID</th>'."\n";
