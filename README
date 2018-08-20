@@ -1,14 +1,13 @@
 Plugin Name: Move Comments
-Version: 1.0.0
+Version: 2.0.0
 Plugin URI: http://www.dountsis.com/projects/move-comments/
 Author: Apostolos Dountsis
 Author URI: http://www.dountsis.com
-Description: Allows you to move comments between posts. Adds a page ('Move') under 'Comments' in the Dashboard.
-
+Description:  This plugin allows you to move comments between posts in a simple and easy way by adding a page under ('Move') under the 'Comments' section in the admin Dashboard.
 
 Installation Instructions
 -------------------------
-Upload the move-comments folder to wp-content/plugins/ and then enable the plugin from the 'Plugins' page.
+Simply select the plugin from the WordPress repository and click the Install button.
 
 
 Enjoy the plugin!

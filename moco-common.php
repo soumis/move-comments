@@ -1,12 +1,12 @@
 <?php
 /*
- * moco_common.php
+ * moco-common.phphp
  *
  * General Purpose Library
  * It contains static functions.
  */
  
- class moco_common
+ class _common
  {
 
 	/**
