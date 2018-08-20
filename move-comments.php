@@ -216,15 +216,17 @@ class Move_comments
 			$html .= '<table id="the-list-x" width="100%" cellpadding="3" cellspacing="3">'."\n";
 			$html .= '<tr>'."\n";
 //			$html .= '<th scope="col">ID</th>'."\n";
-			$html .= '<th scope="col">Author</th>'."\n";
+            $html .= '<th scope="col">Select</th>'."\n";
+			$html .= '<th scope="col">Commenter</th>'."\n";
 			$html .= '<th scope="col">Comment</th>'."\n";
-			$html .= '<th scope="col">Date</th>'."\n";
-			$html .= '<th scope="col" colspan="3">Select</th>'."\n";
+			$html .= '<th scope="col">Dated</th>'."\n";
+
 			$html .= '<tr>'."\n";
 			
 			$checkbox_index = 0;
 			foreach($comments as $comment)
 			{
+			    // Row Definition
 				if(_common::is_even($checkbox_index))
 				{
 					$row_class = "alternate";
@@ -234,9 +236,23 @@ class Move_comments
 					$row_class = "";
 				}
 				$html .= "<tr id=\"$comment->comment_id\" class=\"$row_class\">\n";
+
+				// Row Columns
+                // Display the comment entry as checked if the validation fails and user had it checked upon form submission
+                if($_POST["move_comment_id"] and $_POST["move_comment_id"][$checkbox_index] == $comment->comment_id)
+                {
+                    $checked = 'checked';
+                }
+                else
+                {
+                    $checked = '';
+                }
+
+                $html .= "<td><input type=\"checkbox\" name=\"move_comment_id[$checkbox_index]\" value=\"$comment->comment_id\" $checked /></td>\n";
 //				$html .= "<td>$comment->comment_id</td>\n";
 				$html .= "<td>$comment->comment_author</td>\n";
-				
+
+
 				// Display a portion of the comment_content if it is too long
 				$comment_body = $comment->comment_content;
 				if(strlen($comment_body) > 250)
@@ -248,17 +264,7 @@ class Move_comments
 				$html .= "<td>$comment_body</td>\n";
 				$html .= "<td>$comment->comment_date</td>\n";
 
-				// Display the comment entry as checked if the validation fails and user had it checked upon form submission
-				if($_POST["move_comment_id"] and $_POST["move_comment_id"][$checkbox_index] == $comment->comment_id)
-				{
-					$checked = 'checked';
-				}
-				else
-				{
-					$checked = '';
-				}
 
-				$html .= "<td><input type=\"checkbox\" name=\"move_comment_id[$checkbox_index]\" value=\"$comment->comment_id\" $checked /></td>\n";
 				$html .= '</tr>';
 				$checkbox_index++;
 			}
