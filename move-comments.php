@@ -123,14 +123,17 @@ class Move_comments
 		
 		print($html);
 	}
-	
-	function display_interface()
+
+    /**
+     * @return string
+     */
+    function display_interface()
 	{		
 		$html = $this->display_post_filter();
 
 		$html .= '<br /><br />';
 
-		$html .= '<form name="move_-_comments" method="post" action="'.$_SERVER['PHP_SELF'].'?page='.$_REQUEST['page'].'&source_post_id='.$_GET['source_post_id'].'">';
+		$html .= '<form name="move-comments" method="post" action="'.$_SERVER['PHP_SELF'].'?page='.$_REQUEST['page'].'&source_post_id='.$_GET['source_post_id'].'">';
 
 //		$html .= '<p class="submit"><input type="submit" value="Update Options  &raquo;"></p>';
 		
@@ -138,11 +141,11 @@ class Move_comments
 		{
 			$html .= $this->display_comments($_GET['source_post_id']);
 		}
-		else
+/*		else
 		{
 			$html .= '<p>Select a post to browse its comments.</p><br />';
 		}
-
+*/
 		$html .= $this->display_target_post();
 		
 		$html .= '<br /><br />';
@@ -151,7 +154,7 @@ class Move_comments
 		$html .= '<input type="hidden" name="source_post_id" value="'.$_GET['source_post_id'].'">';
 		
 		// Submit button
-		$html .= '<p class="submit"><input type="submit" value="Update Options  &raquo;"></p>';
+		$html .= '<p class="submit"><input type="submit" value="Move Comment &raquo;"></p>';
 		$html .= '</form>';
 	
 		return $html;
@@ -162,7 +165,6 @@ class Move_comments
 	{
 		$html = '';
 		$id = (int)$_REQUEST['source_post_id'];
-//		$posts = $this->db->get_all_posts();
 		$posts = $this->db->get_posts_with_comments();
 		
 		if(!empty($posts))
@@ -175,7 +177,7 @@ class Move_comments
 			{
 				$s = 'selected';
 			}
-			$html .= '<option value="0" '.$s.'>-- Select a Post --</option>';
+			$html .= '<option value="0" '.$s.'>-- Select Source --</option>';
 			
 			foreach($posts as $p)
 			{
@@ -191,7 +193,7 @@ class Move_comments
 			if($id)
 			{
 				// $this->db->get_post_title_by_id($id);
-				$html .= " <a href=\"".get_permalink($id)."\" target=\"_blank\">View Page</a>";
+				$html .= " <a href=\"".get_permalink($id)."\" target=\"_blank\">View</a>";
 			}
 			
 		}
@@ -245,7 +247,7 @@ class Move_comments
 
 				$html .= "<td>$comment_body</td>\n";
 				$html .= "<td>$comment->comment_date</td>\n";
-				
+
 				// Display the comment entry as checked if the validation fails and user had it checked upon form submission
 				if($_POST["move_comment_id"] and $_POST["move_comment_id"][$checkbox_index] == $comment->comment_id)
 				{
@@ -271,7 +273,7 @@ class Move_comments
 		return $html;
 	}
 	
-	// Diplay post filtering	
+	// Display post filtering
 	function display_target_post()
 	{
 		$html = '';
@@ -280,10 +282,10 @@ class Move_comments
 
 		if(!empty($posts))
 		{
-			$html .= 'Move comment(s) to: '."\n";
+			$html .= 'Move comment(s) to published post: '."\n";
 			$html .= "<select name=\"target_post_id\">\n";
 
-			$html .= '<option value="0">-- Select a Post --</option>'."\n";
+			$html .= '<option value="0">-- Select Destination --</option>'."\n";
 			
 			foreach($posts as $p)
 			{

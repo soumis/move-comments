@@ -11,6 +11,7 @@ class _db
 
 		$data = $wpdb->get_results("select id, post_title
 					from $wpdb->posts
+					where post_status ='publish'
 					order by id desc");
 		return $data;
 	}
