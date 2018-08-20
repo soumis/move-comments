@@ -2,7 +2,7 @@
 
 include_once('moco-common.php');
 
-class _db
+class Moco_db
 {
 	function get_all_posts()
 	{

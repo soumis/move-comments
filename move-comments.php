@@ -35,7 +35,7 @@ class Move_comments
 	
 	function __construct()
 	{
-		$this->db = new _db();
+		$this->db = new Moco_db();
 		
 		$this->attach_view();
 		
@@ -49,7 +49,7 @@ class Move_comments
 	{
 		if($data and is_array($data))
 		{
-//			moco_-_common::pre_print_r($data);
+//			Moco-common::pre_print_r($data);
 			$source_post_id = (int) $data['source_post_id'];
 			$target_post_id = (int) $data['target_post_id'];
 			foreach($data['move_comment_id'] as $comment_id)
@@ -57,7 +57,7 @@ class Move_comments
 				$this->db->move_comment($source_post_id, $target_post_id, $comment_id);
 			}
 		}
-		_common::redirect();
+		Moco_common::redirect();
 	}
 	
 	function validate_form(&$data)
@@ -169,7 +169,7 @@ class Move_comments
 		
 		if(!empty($posts))
 		{
-			$html = 'View comment(s) in post or page: ';
+			$html = 'View comment(s) in post/page: ';
 			$html .= "<select name=\"source_post_id\" onchange=\"javascript:location.href='?page=move-comments/move-comments.php&source_post_id='+this.options[this.selectedIndex].value;\">";
 
 			$s = 0;
@@ -227,7 +227,7 @@ class Move_comments
 			foreach($comments as $comment)
 			{
 			    // Row Definition
-				if(_common::is_even($checkbox_index))
+				if(Moco_common::is_even($checkbox_index))
 				{
 					$row_class = "alternate";
 				}

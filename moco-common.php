@@ -6,7 +6,7 @@
  * It contains static functions.
  */
  
- class _common
+ class Moco_common
  {
 
 	/**
