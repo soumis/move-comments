@@ -5,7 +5,7 @@ Version: 2.0.0
 Plugin URI: http://www.dountsis.com/projects/move-comments/
 Author: Apostolos Dountsis
 Author URI: http://www.dountsis.com
-Description: Allows you to move comments between posts. Adds a page under <a href="edit-comments.php?page=move-comments/move-comments.php">Comments -> Move</a>.
+Description: This plugin allows you to move comments between posts in a simple and easy way by adding a page under <a href="edit-comments.php?page=move-comments/move-comments.php">Comments -> Move</a>.
 */
 
 /*  Copyright 2018  APOSTOLOS DOUNTSIS
