@@ -30,15 +30,12 @@ include_once('moco-common.php');
 
 class Move_comments
 {
-	private $db;
-	private $form_errors;
-	private $helper;
-
+	var $db;
+	var $form_errors;
+	
 	function __construct()
 	{
-		$this->db = new Moco_Model();
-
-		$this->helper = new Moco_Helper();
+		$this->db = new Moco_db();
 		
 		$this->attach_view();
 		
@@ -52,7 +49,7 @@ class Move_comments
 	{
 		if($data and is_array($data))
 		{
-//			$this->helper->pre_print_r($data);
+//			Moco-common::pre_print_r($data);
 			$source_post_id = (int) $data['source_post_id'];
 			$target_post_id = (int) $data['target_post_id'];
 			foreach($data['move_comment_id'] as $comment_id)
@@ -60,7 +57,7 @@ class Move_comments
 				$this->db->move_comment($source_post_id, $target_post_id, $comment_id);
 			}
 		}
-        $this->helper->redirect();
+		Moco_common::redirect();
 	}
 	
 	function validate_form(&$data)
@@ -117,7 +114,7 @@ class Move_comments
 		$html = '<div class="wrap">';
 		$html .= '<h2>Move Comments</h2>';
 
-		$html .= $this->display_admin_form();
+		$html .= $this->display_interface();
 
   		// Debug Screen
 // 		$html .= $this->debug_section();
@@ -130,37 +127,31 @@ class Move_comments
     /**
      * @return string
      */
-    function display_admin_form()
-	{
-        $action = htmlspecialchars($_SERVER['PHP_SELF']);
-        $page = htmlspecialchars($_REQUEST['page']);
-        $sourcePostId = htmlspecialchars($_GET['source_post_id']);
-
-        // Display the Source Post/Page selection
+    function display_interface()
+	{		
 		$html = $this->display_post_filter();
 
 		$html .= '<br /><br />';
 
-		$html .= '<form name="move-comments" method="post" action="'.$action.'?page='.$page.'&source_post_id='.$sourcePostId.'">';
+		$html .= '<form name="move-comments" method="post" action="'.$_SERVER['PHP_SELF'].'?page='.$_REQUEST['page'].'&source_post_id='.$_GET['source_post_id'].'">';
 
 //		$html .= '<p class="submit"><input type="submit" value="Update Options  &raquo;"></p>';
 		
-		if($sourcePostId and is_numeric($sourcePostId))
+		if($_GET['source_post_id'] and is_numeric($_GET['source_post_id']))
 		{
-			$html .= $this->display_comments($sourcePostId);
+			$html .= $this->display_comments($_GET['source_post_id']);
 		}
 /*		else
 		{
 			$html .= '<p>Select a post to browse its comments.</p><br />';
 		}
 */
-        // Display the Destination Post/Page selection
-		$html .= $this->display_destination_post();
+		$html .= $this->display_target_post();
 		
 		$html .= '<br /><br />';
 		
 		// Hidden form attribute for source_post_id
-		$html .= '<input type="hidden" name="source_post_id" value="'.$sourcePostId.'">';
+		$html .= '<input type="hidden" name="source_post_id" value="'.$_GET['source_post_id'].'">';
 		
 		// Submit button
 		$html .= '<p class="submit"><input type="submit" value="Move Comment &raquo;"></p>';
@@ -236,7 +227,7 @@ class Move_comments
 			foreach($comments as $comment)
 			{
 			    // Row Definition
-				if($this->helper->is_even($checkbox_index))
+				if(Moco_common::is_even($checkbox_index))
 				{
 					$row_class = "alternate";
 				}
@@ -248,7 +239,6 @@ class Move_comments
 
 				// Row Columns
                 // Display the comment entry as checked if the validation fails and user had it checked upon form submission
-   //             $move_comment_id = html_escape($_POST["move_comment_id"]);
                 if($_POST["move_comment_id"] and $_POST["move_comment_id"][$checkbox_index] == $comment->comment_id)
                 {
                     $checked = 'checked';
@@ -290,7 +280,7 @@ class Move_comments
 	}
 	
 	// Display post filtering
-	function display_destination_post()
+	function display_target_post()
 	{
 		$html = '';
 
@@ -314,10 +304,6 @@ class Move_comments
 			}
 			$html .= '</select>'."\n";
 		}
-		else
-        {
-            $html .= 'No published page or post exists'."\n";
-        }
 		
 		if($this->form_errors['target_post_id'])
 		{
