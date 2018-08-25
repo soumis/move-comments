@@ -8,18 +8,26 @@ class WordPressModel
     {
         global $wpdb;
         $postStatus = htmlentities($postStatus);
-		$data = $wpdb->get_results("select id, post_title from {$wpdb->posts} where post_status ='$postStatus' order by id desc");
+		$data = $wpdb->get_results("select id, post_title 
+                    from {$wpdb->posts}
+                    where post_type in ('page', 'post')
+                    and post_status ='$postStatus'
+                    order by id desc");
 		return $data;
     }
 
-	public function getsPostsWithComments()
+    /**
+     * @return array|null|object
+     */
+    public function getsPostsWithComments()
 	{
 		global $wpdb;
 		$data = array();
 		
 		$data = $wpdb->get_results("select id, post_title
 					from {$wpdb->posts}
-					where comment_count > 0
+					where post_type in ('page', 'post')
+					and comment_count > 0
 					order by id desc");
 		return $data;
 	}
