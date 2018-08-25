@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Move Comments
-Version: 2.0.0
+Version: 2.1
 Plugin URI: http://www.dountsis.com/projects/move-comments/
 Author: Apostolos Dountsis
 Author URI: http://www.dountsis.com
@@ -28,7 +28,7 @@ Description: This plugin allows you to move comments between posts in a simple a
 include_once('moco-db.php');
 include_once('moco-common.php');
 
-class Move_comments
+class Move_Comments
 {
 	private $db;
 	private $form_errors;
@@ -328,5 +328,5 @@ class Move_comments
 	}
 }
 
-$mc = new Move_comments();
+$mc = new Move_Comments();
 ?>
