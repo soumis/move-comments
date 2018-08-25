@@ -2,17 +2,17 @@
 
 include_once('moco-common.php');
 
-class Moco_Model
+class WordPressModel
 {
-	function get_all_posts()
-	{
-		global $wpdb;
-
-		$data = $wpdb->get_results("select id, post_title from {$wpdb->posts} where post_status ='publish' order by id desc");
+    public function getPostsWithStatus($postStatus="publish")
+    {
+        global $wpdb;
+        $postStatus = htmlentities($postStatus);
+		$data = $wpdb->get_results("select id, post_title from {$wpdb->posts} where post_status ='$postStatus' order by id desc");
 		return $data;
-	}
+    }
 
-	function get_posts_with_comments()
+	public function getsPostsWithComments()
 	{
 		global $wpdb;
 		$data = array();
@@ -24,7 +24,7 @@ class Moco_Model
 		return $data;
 	}
 
-	function get_post_title_by_id($id)
+	public function getPostTitleByID($id)
 	{
 		global $wpdb;
 		$data = array();
@@ -37,7 +37,7 @@ class Moco_Model
 		return $data;
 	}
 
-	function get_comments_by_postid($id)
+	public function getCommentsForPostID($id)
 	{
 		global $wpdb;
 		$data = array();
@@ -53,7 +53,7 @@ class Moco_Model
 		return $data;
 	}
 
-	function move_comment($source_post_id, $target_post_id, $comment_id)
+	public function MoveComment($source_post_id, $target_post_id, $comment_id)
 	{
 		global $wpdb;
 		

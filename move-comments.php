@@ -36,7 +36,7 @@ class Move_Comments
 
 	function __construct()
 	{
-		$this->db = new Moco_Model();
+		$this->db = new WordPressModel();
 
 		$this->helper = new Moco_Helper();
 		
@@ -57,7 +57,7 @@ class Move_Comments
 			$target_post_id = (int) $data['target_post_id'];
 			foreach($data['move_comment_id'] as $comment_id)
 			{
-				$this->db->move_comment($source_post_id, $target_post_id, $comment_id);
+				$this->db->MoveComment($source_post_id, $target_post_id, $comment_id);
 			}
 		}
         $this->helper->redirect();
@@ -174,7 +174,7 @@ class Move_Comments
 	{
 		$html = '';
 		$id = (int)$_REQUEST['source_post_id'];
-		$posts = $this->db->get_posts_with_comments();
+		$posts = $this->db->getsPostsWithComments();
 		
 		if(!empty($posts))
 		{
@@ -201,7 +201,7 @@ class Move_Comments
 			
 			if($id)
 			{
-				// $this->db->get_post_title_by_id($id);
+				// $this->db->getPostTitleByID($id);
 				$html .= " <a href=\"".get_permalink($id)."\" target=\"_blank\">View</a>";
 			}
 			
@@ -216,7 +216,7 @@ class Move_Comments
 		
 		if(is_numeric($post_id))
 		{
-			$comments = $this->db->get_comments_by_postid($post_id);
+			$comments = $this->db->getCommentsForPostID($post_id);
 		}
 		
 		if(!empty($comments))
@@ -294,7 +294,8 @@ class Move_Comments
 	{
 		$html = '';
 
-		$posts = $this->db->get_all_posts();
+		// $posts = $this->db->get_all_posts();
+        $posts = $this->db->getPostsWithStatus("publish");
 
 		if(!empty($posts))
 		{
