@@ -6,7 +6,7 @@
  * It contains static functions.
  */
  
- class Moco_common
+ class Moco_Helper
  {
 
 	/**
@@ -14,7 +14,7 @@
 	 *
 	 * @return void
 	 */
-	function pre_print_r($txt)
+     function pre_print_r($txt)
 	{
 		print("<pre>\n"); 
 		print_r($txt); 
@@ -26,7 +26,7 @@
 	 *
 	 * @return boolean
 	 */
-	function is_even($number)
+     function is_even($number)
 	{
 		if ($number % 2 == 0 )
 		{
@@ -39,8 +39,8 @@
 			return false;
 		}
 	}
-	
-	function redirect($location = '')
+
+     function redirect($location = '')
 	{
 		if(empty($location))
 		{
@@ -64,8 +64,8 @@
 	 * Determines the application host platform
 	 *
 	 * @return array
-	 */	
-	function get_host_platform()
+	 */
+     function get_host_platform()
 	{
 		$host = array();
 		
@@ -83,8 +83,8 @@
 	 * Retrieve the application URL
 	 *
 	 * @return string
-	 */ 	
- 	function get_current_url()
+	 */
+     function get_current_url()
  	{
 		$current_dir = '';
 		
