@@ -12,6 +12,7 @@ class WordPressModel
                     from {$wpdb->posts}
                     where post_type in ('page', 'post')
                     and post_status ='$postStatus'
+                    and post_type != 'revision'
                     order by id desc");
 		return $data;
     }
@@ -28,6 +29,7 @@ class WordPressModel
 					from {$wpdb->posts}
 					where post_type in ('page', 'post')
 					and comment_count > 0
+					and post_type != 'revision'
 					order by id desc");
 		return $data;
 	}
