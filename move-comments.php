@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Move Comments
-Version: 2.1
+Version: 2.2
 Plugin URI: http://www.dountsis.com/projects/move-comments/
 Author: Apostolos Dountsis
 Author URI: http://www.dountsis.com
@@ -28,7 +28,7 @@ Description: This plugin allows you to move comments between posts in a simple a
 include_once('moco-db.php');
 include_once('moco-common.php');
 
-class Move_Comments
+class MoveComments
 {
 	private $db;
 	private $form_errors;
@@ -38,32 +38,40 @@ class Move_Comments
 	{
 		$this->db = new WordPressModel();
 
-		$this->helper = new Moco_Helper();
+		$this->helper = new MocoHelper();
 		
 		$this->attach_view();
-		
-		if($_POST and $this->validate_form($_POST))
+
+
+        /* Sanitize $_POST to prevent XSS. */
+        if($_POST)
+        {
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        }
+
+        // Validate data for processing
+		if($_POST and $this->validateForm($_POST))
 		{
-			$this->process_post_submission($_POST);
+			$this->processPostSubmission($_POST);
 		}
 	}
 
-	function process_post_submission(&$data)
+	function processPostSubmission(&$data)
 	{
 		if($data and is_array($data))
 		{
-//			$this->helper->pre_print_r($data);
 			$source_post_id = (int) $data['source_post_id'];
 			$target_post_id = (int) $data['target_post_id'];
 			foreach($data['move_comment_id'] as $comment_id)
 			{
-				$this->db->MoveComment($source_post_id, $target_post_id, $comment_id);
+                $comment_id = (int) $comment_id;
+				$this->db->moveComment($source_post_id, $target_post_id, $comment_id);
 			}
 		}
         $this->helper->redirect();
 	}
 	
-	function validate_form(&$data)
+	function validateForm(&$data)
 	{
 		$validate = true;
 		
@@ -83,17 +91,16 @@ class Move_Comments
 	
 	function attach_view()
 	{
-	
 		// Has the use access to moderate comments?
 //		if(current_user_can('moderate_comments'))
 //		{	
 			// Add Admin Menu
-			add_action('admin_menu', array(&$this, 'admin_menu'));
+			add_action('admin_menu', array(&$this, 'adminMenu'));
 //		}
 	}
 	
 	// Manage Admin Options
-	function admin_menu()
+	function adminMenu()
 	{
 		global $submenu;
 		
@@ -101,23 +108,23 @@ class Move_Comments
 		if (isset($submenu['edit-comments.php']))
 		{
 			// parent, page_title, menu_title, access_level/capability, file, [function]);
-			add_submenu_page('edit-comments.php', 'Move Comments', 'Move', 8, __FILE__, array(&$this, 'admin_page'));
+			add_submenu_page('edit-comments.php', 'Move Comments', 'Move', 8, __FILE__, array(&$this, 'adminPage'));
 		}
 		else
 		{
 			// Attach the admin page under Management
-			add_management_page('Move Comments', 'Move Comments', 8, __FILE__, array(&$this, 'admin_page'));
+			add_management_page('Move Comments', 'Move Comments', 8, __FILE__, array(&$this, 'adminPage'));
 
 		}
 	}	
 
 	// Admin page
-	function admin_page()
+	function adminPage()
 	{
 		$html = '<div class="wrap">';
 		$html .= '<h2>Move Comments</h2>';
 
-		$html .= $this->display_admin_form();
+		$html .= $this->displayAdminForm();
 
   		// Debug Screen
 // 		$html .= $this->debug_section();
@@ -130,14 +137,20 @@ class Move_Comments
     /**
      * @return string
      */
-    function display_admin_form()
+    function displayAdminForm()
 	{
+        /* Sanitize $_GET to prevent XSS. */
+        if($_GET)
+        {
+            $_GET = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
+        }
+
         $action = htmlspecialchars($_SERVER['PHP_SELF']);
         $page = htmlspecialchars($_REQUEST['page']);
         $sourcePostId = htmlspecialchars($_GET['source_post_id']);
 
         // Display the Source Post/Page selection
-		$html = $this->display_post_filter();
+		$html = $this->displayPostFilter();
 
 		$html .= '<br /><br />';
 
@@ -147,7 +160,7 @@ class Move_Comments
 		
 		if($sourcePostId and is_numeric($sourcePostId))
 		{
-			$html .= $this->display_comments($sourcePostId);
+			$html .= $this->displayComments($sourcePostId);
 		}
 /*		else
 		{
@@ -155,7 +168,7 @@ class Move_Comments
 		}
 */
         // Display the Destination Post/Page selection
-		$html .= $this->display_destination_post();
+		$html .= $this->displayDestinationPost();
 		
 		$html .= '<br /><br />';
 		
@@ -170,7 +183,7 @@ class Move_Comments
 	}
 
 	// Display post filtering
-	function display_post_filter()
+	function displayPostFilter()
 	{
 		$html = '';
 		$id = (int)$_REQUEST['source_post_id'];
@@ -209,7 +222,7 @@ class Move_Comments
 		return $html;
 	}
 	
-	function display_comments($post_id)
+	function displayComments($post_id)
 	{
 		$comments = array();
 		$html = '';
@@ -281,16 +294,16 @@ class Move_Comments
 			$html .= '</table>'."\n";
 			$html .= '<br />'."\n";
 		}
-		else
+/*		else
 		{
 			$html .= '<p><strong>There are no comments in this post.</strong></p><br />'."\n";
 		}
-		
+*/
 		return $html;
 	}
 	
 	// Display post filtering
-	function display_destination_post()
+	function displayDestinationPost()
 	{
 		$html = '';
 
@@ -329,5 +342,5 @@ class Move_Comments
 	}
 }
 
-$mc = new Move_Comments();
+$mc = new MoveComments();
 ?>

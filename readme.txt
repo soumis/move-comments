@@ -4,7 +4,7 @@ Donate link: http://www.dountsis.com
 Tags: move, comments, post, page, spam
 Requires at least: 4.6
 Tested up to: 4.9.8
-Stable tag: 2.1
+Stable tag: 2.2
 Requires PHP: 7.0.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html

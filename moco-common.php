@@ -5,8 +5,12 @@
  * General Purpose Library
  * It contains static functions.
  */
- 
- class Moco_Helper
+
+if ( !function_exists('wp_safe_redirect')) {
+    require_once (ABSPATH . WPINC . '/pluggable.php');
+}
+
+ class MocoHelper
  {
 
 	/**
@@ -45,9 +49,11 @@
 		if(empty($location))
 		{
 			$location = $_SERVER['PHP_SELF'];
-			
+
 			if($_GET)
 			{
+                /* Sanitize $_GET to prevent XSS. */
+                $_GET   = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
 				$args = '?';
 				foreach($_GET as $var => $value)
 				{
@@ -55,8 +61,8 @@
 				}
 			}
 		}
-
-		header("location: $location$args");
+        wp_safe_redirect($location . $args);
+		//header("location: $location$args");
 		exit();
 	}
 

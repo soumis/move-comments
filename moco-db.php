@@ -61,7 +61,7 @@ class WordPressModel
 		return $data;
 	}
 
-	public function MoveComment($source_post_id, $target_post_id, $comment_id)
+	public function moveComment($source_post_id, $target_post_id, $comment_id)
 	{
 		global $wpdb;
 		
