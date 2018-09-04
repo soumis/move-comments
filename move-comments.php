@@ -25,6 +25,8 @@ Description: This plugin allows you to move comments between posts in a simple a
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
+defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
+
 include_once('moco-db.php');
 include_once('moco-common.php');
 

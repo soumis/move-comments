@@ -5,6 +5,7 @@
  * General Purpose Library
  * It contains static functions.
  */
+defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 
 if ( !function_exists('wp_safe_redirect')) {
     require_once (ABSPATH . WPINC . '/pluggable.php');
